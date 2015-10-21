@@ -28,31 +28,48 @@ public class HashMap {
 	public void put(int key, int value) {
 		int h = hash(key);
 
-		entry[h] = new Entry(key, value);
+		if (entry[h] == null) {
+			entry[h] = new Entry(key, value);
+			return;
+		}
+		
+		Entry head = entry[h];
+		Entry prev = null;
+		while (head != null) {
+			if (head.getKey() == key) {
+				Entry temp = head;
+				head = new Entry(key, value);
+				head.next = temp.next;
+				if (prev != null)
+					prev.next = head;
+				else
+					entry[h] = head;
+				break;
+			} else {
+				head = head.next;
+			}
+			prev = head;
+		}
+		
+		if (head == null) {
+			prev.next = new Entry(key, value);
+		}
 	}
 	
-	public int get(int key) {
+	public Integer get(int key) {
 		int h = hash(key);
-		return entry[h].getValue();
+		
+		if (entry[h] != null)
+			return entry[h].getValue();
+		else
+			return (Integer) null;
 	}
 	
-	public void printAll() {
+	/*public void printAll() {
 		for(Entry e : entry) {
 			if (e != null)
 				System.out.println(e.getKey() +":" +e.getValue());
 		}
-	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		HashMap h = new HashMap();
-		
-		for (int i = 0; i < 10; ++i)
-			h.put(i, i);
-		
-		h.printAll();
-	}
+	}*/
 
 }
