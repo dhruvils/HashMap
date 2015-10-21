@@ -23,7 +23,8 @@ public class HashMap<K, V> {
 	}
 	
 	private int hash(K key) {
-		return key.hashCode() & (numEntries - 1);
+		int hash = key.hashCode();
+		return (hash ^ (hash >>> 16)) & (numEntries - 1);
 	}
 	
 	public boolean containsKey(K key) {
@@ -82,7 +83,7 @@ public class HashMap<K, V> {
 		if (entry[h] != null){
 			Entry<K, V> head = entry[h];
 			while (head != null) {
-				if (head.getKey() == key)
+				if (head.getKey().equals(key))
 					break;
 				head = head.next;
 			}

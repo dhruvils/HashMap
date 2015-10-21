@@ -1,6 +1,8 @@
 package test.hashmap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -62,8 +64,24 @@ public class HashMapTests {
 	}
 	
 	@Test
-	public void NotContainsKeyTest() {
+	public void NotContainsKeyInEmptyMapTest() {
 		assertFalse("Shouldn't contain key", h.containsKey(0));
+	}
+	
+	@Test
+	public void NotContainsKeyTest() {
+		for (int i = 0; i < 100000; ++i)
+			h.put(i, i);
+		
+		assertFalse("Shouldn't contain key", h.containsKey(999999));
+	}
+	
+	@Test
+	public void PutLoadTest() {
+		for (int i = 0; i < 100000; ++i)
+			h.put(i, i);
+		
+		assertEquals("Thousand entries weren't added", 99999, (int)h.get(99999));
 	}
 
 }
