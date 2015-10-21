@@ -7,38 +7,39 @@ package hashmap;
  * @author Dhruvil
  *My hashmap implementation
  */
-public class HashMap {
+public class HashMap<K, V> {
 
-	private Entry[] entry;
+	private Entry<K, V>[] entry;
 	private int numEntries;
 	
 	public HashMap() {
 		this(16);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public HashMap(int entries) {
 		entry = new Entry[entries];
 		numEntries = entries;
 	}
 	
-	private int hash(int key) {
-		return key & (numEntries - 1);
+	private int hash(K key) {
+		return key.hashCode() & (numEntries - 1);
 	}
 	
-	public void put(int key, int value) {
+	public void put(K key, V value) {
 		int h = hash(key);
 
 		if (entry[h] == null) {
-			entry[h] = new Entry(key, value);
+			entry[h] = new Entry<K, V>(key, value);
 			return;
 		}
 		
-		Entry head = entry[h];
-		Entry prev = null;
+		Entry<K, V> head = entry[h];
+		Entry<K, V> prev = null;
 		while (head != null) {
 			if (head.getKey() == key) {
-				Entry temp = head;
-				head = new Entry(key, value);
+				Entry<K, V> temp = head;
+				head = new Entry<K, V>(key, value);
 				head.next = temp.next;
 				if (prev != null)
 					prev.next = head;
@@ -53,17 +54,17 @@ public class HashMap {
 		
 		if (head == null) {
 			if (prev != null)
-				prev.next = new Entry(key, value);
+				prev.next = new Entry<K, V>(key, value);
 			else
-				entry[h] = new Entry(key, value);
+				entry[h] = new Entry<K, V>(key, value);
 		}
 	}
 	
-	public Integer get(int key) {
+	public V get(K key) {
 		int h = hash(key);
 		
 		if (entry[h] != null){
-			Entry head = entry[h];
+			Entry<K, V> head = entry[h];
 			while (head != null) {
 				if (head.getKey() == key)
 					break;
@@ -72,14 +73,6 @@ public class HashMap {
 			return head != null ? head.getValue() : null;
 		}
 		else
-			return (Integer) null;
+			return null;
 	}
-	
-	/*public void printAll() {
-		for(Entry e : entry) {
-			if (e != null)
-				System.out.println(e.getKey() +":" +e.getValue());
-		}
-	}*/
-
 }
