@@ -83,5 +83,13 @@ public class HashMapTests {
 		
 		assertEquals("Thousand entries weren't added", 99999, (int)h.get(99999));
 	}
+	
+	@Test
+	public void PutStringsTest() {
+		HashMap<String, String> h = new HashMap<String, String>();
+		h.put("Hello", "World");
+		
+		assertEquals("Should return World", "World", h.get("Hello"));
+	}
 
 }
