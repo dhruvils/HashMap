@@ -1,20 +1,20 @@
 package hashmap;
 
-public class Entry {
-	private int key;
-	private int value;
-	Entry next;
+public class Entry<K, V> {
+	private K key;
+	private V value;
+	Entry<K, V> next = null;
 	
-	public Entry(int k, int v) {
+	public Entry(K k, V v) {
 		key = k;
 		value = v;
 	}
 	
-	public int getKey() {
+	public K getKey() {
 		return key;
 	}
 	
-	public int getValue() {
+	public V getValue() {
 		return value;
 	}
 }
