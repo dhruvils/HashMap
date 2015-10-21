@@ -46,21 +46,31 @@ public class HashMap {
 					entry[h] = head;
 				break;
 			} else {
+				prev = head;
 				head = head.next;
 			}
-			prev = head;
 		}
 		
 		if (head == null) {
-			prev.next = new Entry(key, value);
+			if (prev != null)
+				prev.next = new Entry(key, value);
+			else
+				entry[h] = new Entry(key, value);
 		}
 	}
 	
 	public Integer get(int key) {
 		int h = hash(key);
 		
-		if (entry[h] != null)
-			return entry[h].getValue();
+		if (entry[h] != null){
+			Entry head = entry[h];
+			while (head != null) {
+				if (head.getKey() == key)
+					break;
+				head = head.next;
+			}
+			return head != null ? head.getValue() : null;
+		}
 		else
 			return (Integer) null;
 	}
