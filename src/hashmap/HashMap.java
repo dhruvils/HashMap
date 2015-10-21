@@ -26,6 +26,22 @@ public class HashMap<K, V> {
 		return key.hashCode() & (numEntries - 1);
 	}
 	
+	public boolean containsKey(K key) {
+		int h = hash(key);
+		
+		if (entry[h] == null)
+			return false;
+		
+		Entry<K, V> head = entry[h];
+		while (head != null) {
+			if (head.getKey().equals(key))
+				return true;
+			else
+				head = head.next;
+		}
+		return false;
+	}
+	
 	public void put(K key, V value) {
 		int h = hash(key);
 
@@ -37,7 +53,7 @@ public class HashMap<K, V> {
 		Entry<K, V> head = entry[h];
 		Entry<K, V> prev = null;
 		while (head != null) {
-			if (head.getKey() == key) {
+			if (head.getKey().equals(key)) {
 				Entry<K, V> temp = head;
 				head = new Entry<K, V>(key, value);
 				head.next = temp.next;

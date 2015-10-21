@@ -1,6 +1,6 @@
 package test.hashmap;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +51,19 @@ public class HashMapTests {
 		
 		assertEquals("First collision value is wrong", 123, (int)h.get(0));
 		assertEquals("Second collision value is wrong", 567, (int)h.get(16));
+	}
+	
+	@Test
+	public void ContainsKeyTest() {
+		h.put(0,  123);
+		h.put(1,  456);
+		
+		assertTrue("ContainsKey should have been true", h.containsKey(0));
+	}
+	
+	@Test
+	public void NotContainsKeyTest() {
+		assertFalse("Shouldn't contain key", h.containsKey(0));
 	}
 
 }
